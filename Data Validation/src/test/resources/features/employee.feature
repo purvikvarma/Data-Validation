@@ -21,3 +21,7 @@ Feature: Ecommerce Database Validation
     When user validates total amount for order ID 101
     Then order total amount should be displayed in terminal
 
+  Scenario: Validate customer email format
+    When user validates email format for customer "Purvik Varma"
+    Then email validation result should be displayed in terminal
+
