@@ -25,3 +25,7 @@ Feature: Ecommerce Database Validation
     When user validates email format for customer "Purvik Varma"
     Then email validation result should be displayed in terminal
 
+  Scenario: Validate product stock availability
+    When user checks stock availability for product "iPhone 15"
+    Then stock availability result should be displayed in terminal
+

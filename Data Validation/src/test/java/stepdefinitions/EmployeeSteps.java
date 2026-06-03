@@ -84,4 +84,14 @@ public class EmployeeSteps {
     public void emailValidationResultShouldBeDisplayedInTerminal() {
         System.out.println("Email validation result displayed in terminal");
     }
+
+    @When("user checks stock availability for product {string}")
+    public void userChecksStockAvailabilityForProduct(String arg0) {
+        System.out.println("Checking stock availability for product: " + arg0);
+    }
+
+    @Then("stock availability result should be displayed in terminal")
+    public void stockAvailabilityResultShouldBeDisplayedInTerminal() {
+        System.out.println("Stock availability result displayed in terminal");
+    }
 }
