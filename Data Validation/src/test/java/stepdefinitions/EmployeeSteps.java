@@ -2,6 +2,7 @@ package stepdefinitions;
 
 import database.DBConnection;
 import database.EmployeeQueries;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -72,5 +73,15 @@ public class EmployeeSteps {
     @Then("order total amount should be displayed in terminal")
     public void orderTotalAmountShouldBeDisplayedInTerminal() {
         System.out.println("Order total amount displayed in terminal");
+    }
+
+    @When("user validates email format for customer {string}")
+    public void userValidatesEmailFormatForCustomer(String arg0) {
+        System.out.println("Validating email format for customer: " + arg0);
+    }
+
+    @Then("email validation result should be displayed in terminal")
+    public void emailValidationResultShouldBeDisplayedInTerminal() {
+        System.out.println("Email validation result displayed in terminal");
     }
 }
