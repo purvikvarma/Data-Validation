@@ -2,7 +2,7 @@ package stepdefinitions;
 
 import database.DBConnection;
 import database.EmployeeQueries;
-import io.cucumber.java.PendingException;
+import org.junit.Assert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -78,6 +78,8 @@ public class EmployeeSteps {
     @When("user validates email format for customer {string}")
     public void userValidatesEmailFormatForCustomer(String arg0) {
         System.out.println("Validating email format for customer: " + arg0);
+        boolean isValidEmail = EmployeeQueries.validateCustomerEmail(arg0);
+        Assert.assertTrue("Email validation failed for customer: " + arg0, isValidEmail);
     }
 
     @Then("email validation result should be displayed in terminal")
@@ -88,6 +90,8 @@ public class EmployeeSteps {
     @When("user checks stock availability for product {string}")
     public void userChecksStockAvailabilityForProduct(String arg0) {
         System.out.println("Checking stock availability for product: " + arg0);
+        boolean isInStock = EmployeeQueries.checkProductStockAvailability(arg0);
+        Assert.assertTrue("Product not in stock or not found: " + arg0, isInStock);
     }
 
     @Then("stock availability result should be displayed in terminal")

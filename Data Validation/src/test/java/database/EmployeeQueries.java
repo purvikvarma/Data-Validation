@@ -104,5 +104,63 @@ public class EmployeeQueries {
             System.out.println(e);
         }
     }
+
+    // Validate customer email format (non-regex: must contain @ and . after @)
+    public static boolean validateCustomerEmail(String customerName) {
+        try {
+            Connection connection = DBConnection.getConnection();
+            String query = "SELECT email FROM customers WHERE customer_name = ?";
+            java.sql.PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, customerName);
+            java.sql.ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String email = rs.getString("email");
+                System.out.println("Fetched email: " + email);
+                // Simple validation: must contain '@' and a '.' after '@'
+                int at = email.indexOf('@');
+                if (at > 0 && email.indexOf('.', at) > at + 1) {
+                    System.out.println("Email format is valid: " + email);
+                    return true;
+                } else {
+                    System.out.println("Email format is invalid: " + email);
+                    return false;
+                }
+            } else {
+                System.out.println("Customer not found: " + customerName);
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error validating email: " + e);
+            return false;
+        }
+    }
+
+    // Check product stock availability (returns true if stock > 0, false otherwise)
+    public static boolean checkProductStockAvailability(String productName) {
+        try {
+            Connection connection = DBConnection.getConnection();
+            String query = "SELECT stock FROM products WHERE product_name = ?";
+            java.sql.PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, productName);
+            java.sql.ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int stock = rs.getInt("stock");
+                System.out.println("Fetched stock: " + stock);
+                if (stock > 0) {
+                    System.out.println("Product is in stock: " + productName);
+                    return true;
+                } else {
+                    System.out.println("Product is out of stock: " + productName);
+                    return false;
+                }
+            } else {
+                System.out.println("Product not found: " + productName);
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error checking stock: " + e);
+            return false;
+        }
+    }
 }
 
