@@ -162,5 +162,33 @@ public class EmployeeQueries {
             return false;
         }
     }
+
+    // Display stock availability result for a product
+    public static void displayStockAvailabilityResult(String productName) {
+        try {
+            Connection connection = DBConnection.getConnection();
+            String query = "SELECT product_name, stock FROM products WHERE product_name = ?";
+            java.sql.PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, productName);
+            java.sql.ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("product_name");
+                int stock = rs.getInt("stock");
+                System.out.println("===== Stock Availability Result =====");
+                System.out.println("Product Name: " + name);
+                System.out.println("Stock Available: " + stock);
+                if (stock > 0) {
+                    System.out.println("Status: IN STOCK");
+                } else {
+                    System.out.println("Status: OUT OF STOCK");
+                }
+                System.out.println("=====================================");
+            } else {
+                System.out.println("Product not found: " + productName);
+            }
+        } catch (Exception e) {
+            System.out.println("Error displaying stock result: " + e);
+        }
+    }
 }
 

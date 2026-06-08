@@ -9,6 +9,8 @@ import io.cucumber.java.en.When;
 
 public class EmployeeSteps {
 
+    private String lastCheckedProduct;
+
     @Given("user connects to ecommerce database")
     public void connect_database() {
         DBConnection.getConnection();
@@ -90,12 +92,17 @@ public class EmployeeSteps {
     @When("user checks stock availability for product {string}")
     public void userChecksStockAvailabilityForProduct(String arg0) {
         System.out.println("Checking stock availability for product: " + arg0);
+        this.lastCheckedProduct = arg0;
         boolean isInStock = EmployeeQueries.checkProductStockAvailability(arg0);
         Assert.assertTrue("Product not in stock or not found: " + arg0, isInStock);
     }
 
     @Then("stock availability result should be displayed in terminal")
     public void stockAvailabilityResultShouldBeDisplayedInTerminal() {
-        System.out.println("Stock availability result displayed in terminal");
+        if (lastCheckedProduct != null) {
+            EmployeeQueries.displayStockAvailabilityResult(lastCheckedProduct);
+        } else {
+            System.out.println("Stock availability result displayed in terminal");
+        }
     }
 }
